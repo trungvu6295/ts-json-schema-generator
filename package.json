@@ -2,18 +2,18 @@
   "name": "ts-json-schema-generator",
   "version": "1.0.0",
   "description": "Generate JSON schema from your Typescript sources",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "ts-json-schema-generator": "./bin/ts-json-schema-generator"
-  },
-  "files": [
-    "dist",
-    "src",
-    "factory",
-    "index.*",
-    "ts-json-schema-generator.*"
+  "keywords": [
+    "ts",
+    "typescript",
+    "json",
+    "schema",
+    "jsonschema"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vega/ts-json-schema-generator.git"
+  },
+  "license": "MIT",
   "author": {
     "name": "Alexander Evtushenko",
     "email": "aevtushenko@xiag.ch"
@@ -28,20 +28,32 @@
       "email": "mooyoul@gmail.com"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vega/ts-json-schema-generator.git"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "ts-json-schema-generator": "./bin/ts-json-schema-generator"
   },
-  "license": "MIT",
-  "keywords": [
-    "ts",
-    "typescript",
-    "json",
-    "schema",
-    "jsonschema"
+  "files": [
+    "dist",
+    "src",
+    "factory",
+    "index.*",
+    "ts-json-schema-generator.*"
   ],
-  "engines": {
-    "node": ">=10.0.0"
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc",
+    "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
+    "format": "yarn lint --fix",
+    "lint": "eslint \"{src,test,factory}/**/*.ts\"",
+    "prepublishOnly": "yarn build",
+    "release": "yarn build && auto shipit",
+    "run": "ts-node-transpile-only ts-json-schema-generator.ts",
+    "test": "jest test/ --verbose",
+    "test:coverage": "yarn jest test/ --collectCoverage=true",
+    "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
+    "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@types/json-schema": "^7.0.12",
@@ -79,19 +91,8 @@
     "vega": "^5.25.0",
     "vega-lite": "^5.14.1"
   },
-  "scripts": {
-    "prepublishOnly": "yarn build",
-    "build": "tsc",
-    "watch": "tsc -w",
-    "lint": "eslint \"{src,test,factory}/**/*.ts\"",
-    "format": "yarn lint --fix",
-    "test": "jest test/ --verbose",
-    "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
-    "test:coverage": "yarn jest test/ --collectCoverage=true",
-    "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
-    "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
-    "run": "ts-node-transpile-only ts-json-schema-generator.ts",
-    "release": "yarn build && auto shipit"
-  },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "node": ">=10.0.0"
+  }
 }
